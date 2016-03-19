@@ -34,6 +34,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
+
+#ifdef FREERTOS
+	#include "FreeRTOS.h"
+	#include "task.h"
+#endif
+
+#include "unity.h"
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
