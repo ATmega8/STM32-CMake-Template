@@ -6,6 +6,20 @@ project ( ROV )
 set(CMAKE_SYSTEM_NAME Generic)
 enable_language(ASM)
 
+#选项
+configure_file (
+	  "Source/Include/config.h.in"
+	  "Source/Include/config.h" )
+
+# 是否跨平台编译
+option (CROSS_COMPILE
+	"Corss Compile ?" OFF)
+
+# 使用 FreeRTOS ？
+option (FREERTOS
+		" USE FREERTOS ?" OFF)
+
+if ( CROSS_COMPILE )
 #STDLIB
 add_subdirectory ( Source/STM32StdLib )
 set (CMAKE_SHARED_LIBRARY_LINK_C_FLAGS)
@@ -18,7 +32,7 @@ include_directories ( Source/STM32StdLib/Include )
 include_directories ( Source/Include )
 
 #需要编译的文件
-aux_source_directory ( Source/ DIR_MAIN_SRCS )
+aux_source_directory ( Source DIR_MAIN_SRCS )
 aux_source_directory ( Source/STM32StdLib/Source/CMSIS/ DIR_CMSIS_SRCS )
 
 #CC AR LD AS
@@ -34,11 +48,11 @@ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--start-group -lgcc -lc -lm -lrdimon -
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D USE_STDPERIPH_DRIVER -D STM32F40_41xxx -D HSE_VALUE_25M" )
 
 #LDFLAGS
-set ( CMAKE_EXE_LINKER_FLAGS "-nostartfiles -Wl,--gc-sections -mthumb -mcpu=cortex-m4" CACHE INTERNAL "exe link flags")
+set ( CMAKE_EXE_LINKER_FLAGS "-nostartfiles -Wl,--gc-sections -mthumb -mcpu=cortex-m4" )
 set ( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ldscript/stm32f4_flash.ld" )
 
 #ASMFLAGS
-set ( CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" CACHE INTERNAL "asm compiler flags" )
+set ( CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" )
 
 #指定生成目标
 add_executable ( main.elf ${DIR_MAIN_SRCS} ${DIR_CMSIS_SRCS} Source/STM32StdLib/Source/CMSIS/startup_stm32f40_41xxx.s ) 
@@ -50,4 +64,35 @@ target_link_libraries ( main.elf STM32F4StdPeripherals )
 add_custom_target ( main.bin DEPENDS main.elf COMMAND arm-none-eabi-objcopy -Obinary main.elf main.bin )
 add_custom_target ( size DEPENDS main.elf COMMAND arm-none-eabi-size main.elf )
 
+endif ( CROSS_COMPILE )
+
+if ( NOT CROSS_COMPILE )
+
+
+#包含的头文件
+include_directories ( Source/Include )
+
+set ( CMAKE_C_FLAGS "-g -O0 -Wall")
+set ( CMAKE_EXE_LINKER_FLAGS "-pthread")
+
+if ( FREERTOS )
+
+	add_subdirectory( RTOS )
+	include_directories( RTOS/inc )
+
+endif ( FREERTOS )
+	
+include_directories( Source/Test/unity )
+
+set ( UNITY_SRCS "Source/Test/unity/unity.c" )
+
+add_executable( main Source/main.c ${UNITY_SRCS})
+
+if ( FREERTOS )
+
+	target_link_libraries( main FreeRTOS )
+
+endif ( FREERTOS )
+
+endif ( NOT CROSS_COMPILE )
 

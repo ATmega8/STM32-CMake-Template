@@ -1,0 +1,3 @@
+[submodule "RTOS"]
+	path = RTOS
+	url = https://github.com/ATmega8/FreeRTOS-Linux-Emulatur
