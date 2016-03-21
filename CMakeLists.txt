@@ -71,6 +71,13 @@ if ( NOT CROSS_COMPILE )
 
 #包含的头文件
 include_directories ( Source/Include )
+include_directories ( Source/Utils/Include )
+
+#测试框架头文件
+include_directories( Source/Test/unity )
+
+#测试头文件
+include_directories( Source/Test/CRC )
 
 set ( CMAKE_C_FLAGS "-g -O0 -Wall")
 set ( CMAKE_EXE_LINKER_FLAGS "-pthread")
@@ -81,12 +88,19 @@ if ( FREERTOS )
 	include_directories( RTOS/inc )
 
 endif ( FREERTOS )
-	
-include_directories( Source/Test/unity )
 
+#源文件
+aux_source_directory ( Source/Utils/Source UTILS_SRCS )
+	
+#测试框架源文件
 set ( UNITY_SRCS "Source/Test/unity/unity.c" )
 
-add_executable( main Source/main.c ${UNITY_SRCS})
+#测试源文件
+aux_source_directory ( Source/Test/CRC CRC_TEST_SRC )
+
+add_executable( main Source/main.c ${UNITY_SRCS} 
+	${UTILS_SRCS}
+	${CRC_TEST_SRC})
 
 if ( FREERTOS )
 
