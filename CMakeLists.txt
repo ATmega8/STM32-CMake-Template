@@ -72,12 +72,15 @@ if ( NOT CROSS_COMPILE )
 #包含的头文件
 include_directories ( Source/Include )
 include_directories ( Source/Utils/Include )
+include_directories ( Source/Task/Include )
+include_directories ( Source/PeripheralsDriver/Include )
 
 #测试框架头文件
 include_directories( Source/Test/unity )
 
 #测试头文件
 include_directories( Source/Test/CRC )
+include_directories( Source/Test/USART )
 
 set ( CMAKE_C_FLAGS "-g -O0 -Wall")
 set ( CMAKE_EXE_LINKER_FLAGS "-pthread")
