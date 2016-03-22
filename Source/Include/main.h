@@ -39,12 +39,15 @@
 #ifdef FREERTOS
 	#include "FreeRTOS.h"
 	#include "task.h"
+	#include "semphr.h"
 #endif
 
 #include "unity.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
+int fd;
+xSemaphoreHandle Sem_USART;
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
