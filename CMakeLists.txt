@@ -94,16 +94,22 @@ endif ( FREERTOS )
 
 #源文件
 aux_source_directory ( Source/Utils/Source UTILS_SRCS )
+aux_source_directory ( Source/PeripheralsDriver/Source PERIPH_SRCS )
+aux_source_directory ( Source/Task/Source TASK_SRCS )
 	
 #测试框架源文件
 set ( UNITY_SRCS "Source/Test/unity/unity.c" )
 
 #测试源文件
 aux_source_directory ( Source/Test/CRC CRC_TEST_SRC )
+aux_source_directory ( Source/Test/USART USART_TEST_SRC )
 
 add_executable( main Source/main.c ${UNITY_SRCS} 
 	${UTILS_SRCS}
-	${CRC_TEST_SRC})
+	${PERIPH_SRCS}
+	${TASK_SRCS}
+	${CRC_TEST_SRC}
+	${USART_TEST_SRC})
 
 if ( FREERTOS )
 
