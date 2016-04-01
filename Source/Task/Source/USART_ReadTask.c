@@ -5,7 +5,9 @@
 #include "task.h"
 #include "queue.h"
 
-#include "circularbuffer.h"
+#include "USART_ReadTask.h"
+#include "CRC.h"
+#include "modbus_define.h"
 
 extern int fd;
 extern xSemaphoreHandle Sem_USART;
