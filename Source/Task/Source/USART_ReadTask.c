@@ -16,7 +16,7 @@ extern CircularBufferTypeDef* prxcbuf;
 
 extern QueueHandle_t errorQueue;
 
-	printf("enter USART_ReadTask fd:%d\n", fd);
+void MODBUS_ErrorSend(MODBUSTypeDef* pmodbus, MODBUSStatusTypeDef status, QueueHandle_t queue);
 
 	while(1)
 	{
