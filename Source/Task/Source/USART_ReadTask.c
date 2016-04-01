@@ -14,8 +14,7 @@ extern QueueHandle_t frameLengthQueue;
 extern CircularBufferTypeDef* ptxcbuf;
 extern CircularBufferTypeDef* prxcbuf;
 
-	CircularBufferTypeDef* pcbuf =
-		(CircularBufferTypeDef*)parameter;
+extern QueueHandle_t errorQueue;
 
 	printf("enter USART_ReadTask fd:%d\n", fd);
 
