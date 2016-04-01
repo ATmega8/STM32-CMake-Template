@@ -56,7 +56,7 @@
 #ifdef __cplusplus
  extern "C" {
 #endif /* __cplusplus */
-#define HSE_VALUE 8000000
+#define HSE_VALUE 4000000UL
   
 /** @addtogroup Library_configuration_section
   * @{

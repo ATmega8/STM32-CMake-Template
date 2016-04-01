@@ -34,8 +34,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
+
+#ifdef FREERTOS
+	#include "FreeRTOS.h"
+	#include "task.h"
+	#include "semphr.h"
+#endif
+
+#include "modbus_define.h"
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
+QueueHandle_t frameLengthQueue;
+QueueHandle_t errorQueue;
+
+CircularBufferTypeDef* ptxcbuf;
+CircularBufferTypeDef* prxcbuf;
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 

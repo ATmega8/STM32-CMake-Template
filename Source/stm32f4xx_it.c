@@ -108,15 +108,6 @@ void UsageFault_Handler(void)
 }
 
 /**
-  * @brief  This function handles SVCall exception.
-  * @param  None
-  * @retval None
-  */
-void SVC_Handler(void)
-{
-}
-
-/**
   * @brief  This function handles Debug Monitor exception.
   * @param  None
   * @retval None
@@ -130,19 +121,6 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
-{
-}
-
-/**
-  * @brief  This function handles SysTick Handler.
-  * @param  None
-  * @retval None
-  */
-void SysTick_Handler(void)
-{
-
-}
 
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
@@ -156,6 +134,45 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
+extern QueueHandle_t frameLengthQueue;
+extern CircularBufferTypeDef* pcbuf;
+
+static uint32_t lastHead = 0;
+
+void USART1_IRQHandler(void)
+{
+	uint32_t data;
+	static BaseType_t xHigherPriorityTaskWoken;
+
+	xHigherPriorityTaskWoken = pdFALSE;
+
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+	{
+		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+
+		data = USART_ReceiveData(USART1);
+
+		CircularBuffer_Write(ptxcbuf, &data, 1);
+		
+		USART_ITConfig(USART1, USART_IT_IDLE, ENABLE);
+
+	}
+	else if(USART_GetITStatus(USART1, USART_IT_IDLE) != RESET)
+	{
+		USART_ClearITPendingBit(USART1, USART_IT_IDLE);
+		USART_ITConfig(USART1, USART_IT_IDLE, DISABLE);
+			
+		data = (CircularBuffer_Length(ptxcbuf) -  
+				(lastHead- CircularBuffer_HeadPosition(ptxcbuf)))%CircularBuffer_Length(ptxcbuf);
+
+		lastHead = CircularBuffer_HeadPosition(ptxcbuf);
+
+		xQueueSendFromISR(frameLengthQueue, &data, &xHigherPriorityTaskWoken);
+
+	}
+
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}
 /*void PPP_IRQHandler(void)
 {
 }*/
