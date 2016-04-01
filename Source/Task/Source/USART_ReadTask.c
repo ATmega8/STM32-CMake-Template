@@ -11,12 +11,8 @@
 
 extern QueueHandle_t frameLengthQueue;
 
-void USART_ReadTask(void* parameter)
-{
-	int n;
-	int count = 0;
-	uint8_t data;
-	uint32_t cirbufData;
+extern CircularBufferTypeDef* ptxcbuf;
+extern CircularBufferTypeDef* prxcbuf;
 
 	CircularBufferTypeDef* pcbuf =
 		(CircularBufferTypeDef*)parameter;
