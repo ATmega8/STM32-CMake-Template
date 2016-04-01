@@ -1,2 +1,2 @@
-int USART_Config(int fd);
+void USART_Config(void);
 
