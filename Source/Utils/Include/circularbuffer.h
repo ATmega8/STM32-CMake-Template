@@ -49,3 +49,5 @@ void CircularBuffer_SetStatus(CircularBufferTypeDef* pcbuf, CircularBufferStatus
 void CircularBuffer_SetMemoryPointer(CircularBufferTypeDef* pcbuf, void* memoryPointer);
 void CircularBuffer_SetLength(CircularBufferTypeDef* pcbuf, int length);
 
+uint32_t CircularBuffer_Unused(CircularBufferTypeDef* pcbuf);
+
