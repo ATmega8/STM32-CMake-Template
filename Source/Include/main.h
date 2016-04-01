@@ -46,8 +46,11 @@
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-int fd;
-xSemaphoreHandle Sem_USART;
+QueueHandle_t frameLengthQueue;
+QueueHandle_t errorQueue;
+
+CircularBufferTypeDef* ptxcbuf;
+CircularBufferTypeDef* prxcbuf;
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
