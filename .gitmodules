@@ -1,3 +1,1 @@
-[submodule "RTOS"]
-	path = RTOS
-	url = https://github.com/ATmega8/FreeRTOS-SubModel.git
+
