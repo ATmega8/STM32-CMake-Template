@@ -18,10 +18,11 @@ extern QueueHandle_t errorQueue;
 
 void MODBUS_ErrorSend(MODBUSTypeDef* pmodbus, MODBUSStatusTypeDef status, QueueHandle_t queue);
 
+void MODBUS_Reply(CircularBufferTypeDef* prxcbuf);
+
 void MODBUS_CheckRequestTask(void* parameter)
 {
-	uint32_t lastHead = 0;
-	uint32_t len, data, i;
+
 	uint16_t CRCValue;
 	uint32_t length;
 
@@ -83,36 +84,7 @@ void MODBUS_CheckRequestTask(void* parameter)
 
 		} /* end queue */
 
-		/*检查发送缓冲区状态*/
-		if( CircularBuffer_Status(prxcbuf)  != CircularBuffer_Empty )
-		{
-
-			/*计算帧长*/
-			len = (CircularBuffer_Length(prxcbuf) -  
-				(lastHead - CircularBuffer_HeadPosition(prxcbuf)))%CircularBuffer_Length(prxcbuf);
-
-			lastHead = CircularBuffer_HeadPosition(prxcbuf);
-
-			/*使能驱动器*/
-			GPIO_SetBits(GPIOB, GPIO_Pin_5);
-
-			/*发送数据*/
-			for( i = 0; i < len; i++)
-			{
-				/*读数据*/
-				CircularBuffer_Read(prxcbuf, &data ,1);
-
-				/*写数据*/
-				USART_SendData(USART1, (uint8_t)data);
-
-				/*等待完成*/
-                while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
-			}
-
-			/*关闭驱动器*/
-			GPIO_ResetBits(GPIOB, GPIO_Pin_5);
-
-		} /* end if */
+		MODBUS_Reply(prxcbuf);
 
 		taskYIELD();
 	} /*end while(1) */
