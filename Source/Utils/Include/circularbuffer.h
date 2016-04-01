@@ -1,3 +1,8 @@
+#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #define max(a,b) \
 	({ typeof (a) _a = (a); \
 	typeof (b) _b = (b); \
