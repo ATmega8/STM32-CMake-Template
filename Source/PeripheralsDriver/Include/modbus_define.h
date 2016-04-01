@@ -7,6 +7,9 @@
 #define ADDRESS 0x01
 #define REGISTERSLENGTH 10
 
+#define MODBUS_DE_GPIO_PORT GPIOB
+#define MODBUS_DE_GPIO_PIN  GPIO_Pin_5
+
 uint32_t modbusRegisters[REGISTERSLENGTH];
 
 typedef enum
