@@ -9,8 +9,7 @@
 #include "CRC.h"
 #include "modbus_define.h"
 
-extern int fd;
-extern xSemaphoreHandle Sem_USART;
+extern QueueHandle_t frameLengthQueue;
 
 void USART_ReadTask(void* parameter)
 {
