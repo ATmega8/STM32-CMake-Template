@@ -14,46 +14,36 @@ void IdleTask(void* parameter)
 	}
 }
 
-	/*写入数据*/
-	if( (n = write(fd, &data[0], sizeof(data)) == -1))
-	{
-		printf("Serial Write Error\n");
-		return -1;
-	}
-	
-	/*初始化环形缓冲区*/
-	pcbuf = CircularBuffer_Create(32, sizeof(uint32_t));
+int main(void)
+{
+	USART_Config();
+	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
 
 	/*初始化信号量*/
-	Sem_USART = xSemaphoreCreateBinary();
+	frameLengthQueue = xQueueCreate(7, sizeof(uint32_t));
+	errorQueue = xQueueCreate(7, sizeof(MODBUSTypeDef*));
 
-	if(Sem_USART == NULL)
-	{
-		printf("Semaphore Create Error\n");
-		return -1;
-	}
 
-	/*创建串口读出任务*/
-	//USART_ReadTaskHandle = 
-		xTaskCreate(USART_ReadTask, "UASRT Read Task", 100, pcbuf, 1, NULL);
+	/*初始化环形缓冲区*/
+	ptxcbuf = CircularBuffer_Create(56, sizeof(uint32_t));
+	prxcbuf = CircularBuffer_Create(56, sizeof(uint32_t));
 
-	/*if( USART_ReadTaskHandle == NULL)
-	{
-		printf("USART_ReadTask Create Fail\n");
-		return -1;
-	}*/
+	/*更新 MODBUS 寄存器*/
+	MODBUS_RegisterUpdate();
 
-	//MODBUS_CheckRequestTaskHandle =
-		xTaskCreate(MODBUS_CheckRequestTask, "CheckRequest", 100, pcbuf, 
-				1, NULL);
+	if(frameLengthQueue == NULL)
+		printf("%s %d: Queue Create Fault!", __FUNCTION__, __LINE__ );
 
-	/*if( MODBUS_CheckRequestTaskHandle == NULL)
-	{
-		printf("MODBUS_CheckRequestTask Create Fail\n");
-		return -1;
-	}*/
+	/*任务栈大小必须大于 configMINIMAL_STACK_SIZE !!!! */
+	xTaskCreate(MODBUS_CheckRequestTask, "TASK2", 1024, NULL,  1, NULL);
+	//xTaskCreate(MODBUS_ReplyTask, "TASK1", 1024, NULL,  1, NULL);
 
 	/*开始调度*/
 	vTaskStartScheduler();
+	
+	while(1)
+	{
+
+	}
 }
 
