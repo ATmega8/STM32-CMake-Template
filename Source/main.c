@@ -6,18 +6,13 @@
 
 #include "stm32f4xx_conf.h"
 
-	/*初始化串口*/
-	if((fd = open("/dev/ttyUSB0", O_RDWR )) == -1)
+void IdleTask(void* parameter)
+{
+	while(1)
 	{
-		printf("Serial Port Open Fail\n");
-		return -1;
-	}
 
-	if(USART_Config(fd) == -1)
-	{
-		printf("Serial Port Configure Fail\n");
-		return -1;
 	}
+}
 
 	/*写入数据*/
 	if( (n = write(fd, &data[0], sizeof(data)) == -1))
