@@ -65,7 +65,7 @@ set ( CMAKE_C_FLAGS "-g -Os -Wall -nostartfiles -mthumb -mcpu=cortex-m4 -mfpu=fp
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--gc-sections -u _printf_nano" )
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfloat-abi=hard -mabi=aapcs --specs=rdimon.specs" )
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--start-group -lgcc -lc -lm -lrdimon -Wl,--end-group" )
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D USE_STDPERIPH_DRIVER -D STM32F40_41xxx -D HSE_VALUE_25M" )
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D USE_STDPERIPH_DRIVER -D STM32F40_41xxx" )
 
 #LDFLAGS
 set ( CMAKE_EXE_LINKER_FLAGS "-nostartfiles -Wl,--gc-sections -mthumb -mcpu=cortex-m4" )
