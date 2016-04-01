@@ -69,12 +69,12 @@ inline MODBUSStatusTypeDef MODBUS_ModbusStatus(MODBUSTypeDef* const pmodbus)
 	return pmodbus->status;
 }
 
-inline void MODBUS_EnableDriver(void)
+void MODBUS_EnableDriver(void)
 {
 	GPIO_SetBits(MODBUS_DE_GPIO_PORT, MODBUS_DE_GPIO_PIN);
 }
 
-inline void MODBUS_DisableDriver(void)
+void MODBUS_DisableDriver(void)
 {
 	GPIO_ResetBits(MODBUS_DE_GPIO_PORT, MODBUS_DE_GPIO_PIN);
 }

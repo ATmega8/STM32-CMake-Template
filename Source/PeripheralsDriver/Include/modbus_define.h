@@ -50,8 +50,8 @@ extern uint32_t* MODBUS_DataPointer(MODBUSTypeDef* const pmodbus);
 extern uint16_t  MODBUS_CRC(MODBUSTypeDef* const pmodbus);
 extern MODBUSStatusTypeDef MODBUS_ModbusStatus(MODBUSTypeDef* const pmodbus);
 
-extern void MDOBUS_EnableDriver(void);
-extern void MODBUS_DisableDriver(void);
+void MODBUS_EnableDriver(void);
+void MODBUS_DisableDriver(void);
 
 uint16_t CRC_Calculate(MODBUSTypeDef*const pmodbus);
 void MODBUS_SetModbusFrame(CircularBufferTypeDef* pcbuf, 
