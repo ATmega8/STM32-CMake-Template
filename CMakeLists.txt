@@ -36,8 +36,8 @@ include_directories ( Source/Task/Include )
 
 if ( FREERTOS )
 
-	add_subdirectory( RTOS )
-	include_directories( RTOS/inc )
+	add_subdirectory( FreeRTOSV821)
+	include_directories( FreeRTOSV821/inc )
 
 endif ( FREERTOS )
 
