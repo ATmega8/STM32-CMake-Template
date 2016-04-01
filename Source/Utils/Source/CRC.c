@@ -1,18 +1,6 @@
 #include <stdint.h>
 
-uint16_t CRC_CalculateFrame(uint8_t* data, uint8_t length)
-{
-    uint8_t i;
-	uint16_t CRCValue = IBM_CRC16_INIT_VALUE;
-
-    //CRCValue = CRC_CalculateByte(
-            //CRC_calculate_Byte_CRC(CRCValue, frame->slaveAddr), frame->command);
-
-    for(i = 0; i < length; i++)
-        CRCValue = CRC_CalculateByte(CRCValue, *(data + i));
-
-	return CRCValue;
-}
+#define IBM_CRC16_PLOY	   0xA001
 
 uint16_t CRC_CalculateByte(uint16_t CRCValue, uint8_t data)
 {
