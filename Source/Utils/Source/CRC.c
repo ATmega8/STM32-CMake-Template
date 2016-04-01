@@ -1,4 +1,4 @@
-#include "CRC.h"
+#include <stdint.h>
 
 uint16_t CRC_CalculateFrame(uint8_t* data, uint8_t length)
 {
