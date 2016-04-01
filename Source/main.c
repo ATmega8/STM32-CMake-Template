@@ -4,15 +4,7 @@
 #include "usart.h"
 #include "USART_ReadTask.h"
 
-int main(void)
-{
-	int n;
-	const uint8_t data[10] = {1, 2, 3, 4, 5,
-								6, 7, 8, 9, 10};
-
-	//TaskHandle_t USART_ReadTaskHandle;
-	//TaskHandle_t MODBUS_CheckRequestTaskHandle;
-	CircularBufferTypeDef* pcbuf;
+#include "stm32f4xx_conf.h"
 
 	/*初始化串口*/
 	if((fd = open("/dev/ttyUSB0", O_RDWR )) == -1)
