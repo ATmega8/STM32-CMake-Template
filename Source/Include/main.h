@@ -42,7 +42,7 @@
 	#include "semphr.h"
 #endif
 
-#include "unity.h"
+#include "modbus_define.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
