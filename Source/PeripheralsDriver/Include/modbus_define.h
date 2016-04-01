@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "circularbuffer.h"
+#include "stm32f4xx_conf.h"
 
 #define IBM_CRC16_INIT_VALUE 0xFFFF
 
