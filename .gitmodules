@@ -1,1 +1,4 @@
 
+[submodule "FreeRTOSV821"]
+	path = FreeRTOSV821
+	url = https://github.com/ATmega8/FreeRTOSV821.git
