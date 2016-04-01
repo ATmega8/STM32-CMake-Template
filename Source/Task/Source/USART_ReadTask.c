@@ -166,46 +166,41 @@ void MODBUS_ErrorProcessTask(void* parameter)
 	}
 }
 
-void MODBUS_ReplyTask(void* parameter)
+void MODBUS_Reply(CircularBufferTypeDef* prxcbuf)
 {
+	uint32_t i, data, len;
 	uint32_t lastHead = 0;
-	uint32_t len, data, i;
 
-	while(1)
+	/*检查发送缓冲区状态*/
+	if( CircularBuffer_Status(prxcbuf)  != CircularBuffer_Empty )
 	{
-		/*检查发送缓冲区状态*/
-		if( CircularBuffer_Status(prxcbuf)  != CircularBuffer_Empty )
+
+		/*计算帧长*/
+		len = (CircularBuffer_Length(prxcbuf) -  
+			(lastHead - CircularBuffer_HeadPosition(prxcbuf)))%CircularBuffer_Length(prxcbuf);
+
+		lastHead = CircularBuffer_HeadPosition(prxcbuf);
+
+		/*使能驱动器*/
+		MODBUS_EnableDriver();
+
+		/*发送数据*/
+		for( i = 0; i < len; i++)
 		{
+			/*读数据*/
+			CircularBuffer_Read(prxcbuf, &data ,1);
 
-			/*计算帧长*/
-			len = (CircularBuffer_Length(prxcbuf) -  
-				(lastHead - CircularBuffer_HeadPosition(prxcbuf)))%CircularBuffer_Length(prxcbuf);
+			/*写数据*/
+			USART_SendData(USART1, (uint8_t)data);
 
-			lastHead = CircularBuffer_HeadPosition(prxcbuf);
+			/*等待完成*/
+			while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+		}
 
-			/*使能驱动器*/
+		/*关闭驱动器*/
+		MODBUS_DisableDriver();
 
-			/*发送数据*/
-			for( i = 0; i < len; i++)
-			{
-				/*读数据*/
-				CircularBuffer_Read(prxcbuf, &data ,1);
-
-				/*写数据*/
-				USART_SendData(USART2, (uint8_t)data);
-
-				/*等待完成*/
-                while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
-			}
-
-			/*关闭驱动器*/
-
-			/*帧间隔*/
-			vTaskDelay(1);
-		} /* end if */
-
-		taskYIELD();
-	} /* end while(1) */
+	} /* end if */
 }
 
 
