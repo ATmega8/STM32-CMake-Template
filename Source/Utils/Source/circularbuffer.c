@@ -20,7 +20,7 @@ CircularBufferTypeDef* CircularBuffer_Create(int len, size_t size)
 	return pcbuf;
 }
 
-static inline uint32_t CircularBuffer_Unused(CircularBufferTypeDef* pcbuf)
+uint32_t CircularBuffer_Unused(CircularBufferTypeDef* pcbuf)
 {
 	uint32_t n;
 
