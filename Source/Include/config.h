@@ -1,3 +1,3 @@
-/* #undef CROSS_COMPILE */
+#define CROSS_COMPILE
 #define FREERTOS
 

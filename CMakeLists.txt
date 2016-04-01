@@ -30,10 +30,30 @@ include_directories ( Source/STM32StdLib/Include/CMSIS )
 include_directories ( Source/STM32StdLib/Include/STM32PeripheralsDriver)
 include_directories ( Source/STM32StdLib/Include )
 include_directories ( Source/Include )
+include_directories ( Source/PeripheralsDriver/Include )
+include_directories ( Source/Utils/Include )
+include_directories ( Source/Task/Include )
+
+if ( FREERTOS )
+
+	add_subdirectory( RTOS )
+	include_directories( RTOS/inc )
+
+endif ( FREERTOS )
 
 #需要编译的文件
 aux_source_directory ( Source DIR_MAIN_SRCS )
 aux_source_directory ( Source/STM32StdLib/Source/CMSIS/ DIR_CMSIS_SRCS )
+aux_source_directory ( Source/Utils/Source UTILS_SRCS )
+aux_source_directory ( Source/PeripheralsDriver/Source PERIPH_SRCS )
+aux_source_directory ( Source/Task/Source TASK_SRCS )
+	
+#测试框架源文件
+#set ( UNITY_SRCS "Source/Test/unity/unity.c" )
+
+#测试源文件
+#aux_source_directory ( Source/Test/CRC CRC_TEST_SRC )
+#aux_source_directory ( Source/Test/USART USART_TEST_SRC )
 
 #CC AR LD AS
 set ( CMAKE_C_COMPILER "arm-none-eabi-gcc" )
@@ -55,10 +75,21 @@ set ( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ldscript/stm32f4_flas
 set ( CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" )
 
 #指定生成目标
-add_executable ( main.elf ${DIR_MAIN_SRCS} ${DIR_CMSIS_SRCS} Source/STM32StdLib/Source/CMSIS/startup_stm32f40_41xxx.s ) 
+add_executable ( main.elf ${DIR_MAIN_SRCS} 
+	${DIR_CMSIS_SRCS} 
+	${UTILS_SRCS}
+	${PERIPH_SRCS}
+	${TASK_SRCS}
+	Source/STM32StdLib/Source/CMSIS/startup_stm32f40_41xxx.s ) 
 
 #链接静态库
 target_link_libraries ( main.elf STM32F4StdPeripherals )
+
+if ( FREERTOS )
+
+	target_link_libraries( main.elf FreeRTOS )
+
+endif ( FREERTOS )
 
 #生成二进制文件
 add_custom_target ( main.bin DEPENDS main.elf COMMAND arm-none-eabi-objcopy -Obinary main.elf main.bin )
