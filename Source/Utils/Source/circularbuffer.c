@@ -1,8 +1,3 @@
-#include <string.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "circularbuffer.h"
 
 CircularBufferTypeDef* CircularBuffer_Create(int len, size_t size)
