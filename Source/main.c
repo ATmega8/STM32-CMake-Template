@@ -2,7 +2,6 @@
 
 #include "main.h"
 #include "usart.h"
-#include "circularbuffer.h"
 #include "USART_ReadTask.h"
 
 int main(void)
