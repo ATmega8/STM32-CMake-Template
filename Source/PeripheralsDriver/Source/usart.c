@@ -1,7 +1,6 @@
 #include "stm32f4xx_conf.h"
 #include "modbus_define.h"
 
-/*2000000 8N1 */
 void USART_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
