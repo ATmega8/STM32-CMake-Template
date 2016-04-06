@@ -16,8 +16,8 @@ void IdleTask(void* parameter)
 
 int main(void)
 {
-	USART_Config();
 	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
+	USART_Config();
 
 	/*初始化信号量*/
 	frameLengthQueue = xQueueCreate(7, sizeof(uint32_t));
