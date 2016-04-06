@@ -9,6 +9,9 @@
 #include "CRC.h"
 #include "modbus_define.h"
 
+
+static uint32_t lastHead = 0;
+
 extern QueueHandle_t frameLengthQueue;
 
 extern CircularBufferTypeDef* ptxcbuf;
@@ -169,7 +172,6 @@ void MODBUS_ErrorProcessTask(void* parameter)
 void MODBUS_Reply(CircularBufferTypeDef* prxcbuf)
 {
 	uint32_t i, data, len;
-	uint32_t lastHead = 0;
 
 	/*检查发送缓冲区状态*/
 	if( CircularBuffer_Status(prxcbuf)  != CircularBuffer_Empty )
