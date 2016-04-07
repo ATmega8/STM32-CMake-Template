@@ -6,6 +6,8 @@
 
 #include "stm32f4xx_conf.h"
 
+#include "motor.h"
+
 void IdleTask(void* parameter)
 {
 	while(1)
