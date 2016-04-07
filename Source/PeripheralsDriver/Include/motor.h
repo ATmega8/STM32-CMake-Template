@@ -76,4 +76,5 @@
 void MOTOR_Init(void);
 void MOTOR_Start(void);
 void MOTOR_Stop(void);
+void MOTOR_Forward(void);
 

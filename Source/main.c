@@ -20,6 +20,7 @@ int main(void)
 {
 	MOTOR_Init();
 	MOTOR_Start();
+	MOTOR_Forward();
 	//NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
 	//USART_Config();
 

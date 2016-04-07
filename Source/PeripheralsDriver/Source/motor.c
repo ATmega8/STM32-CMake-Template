@@ -3,10 +3,10 @@
 
 /*TEST VALUE*/
 
-uint32_t CCR1_Val = 2100; /*2625/5*/
+uint32_t CCR1_Val = 2500; /*2625/5*/
 uint32_t CCR2_Val = 1050;
 uint32_t CCR3_Val = 1575;
-uint32_t CCR4_Val = 525;
+uint32_t CCR4_Val = 2100;
 
 /*
  *INH1 PWM1 PA11 CH4
@@ -156,4 +156,14 @@ void MOTOR_Stop(void)
 	TIM_Cmd(MOTOR_TIMER, ENABLE);
 }
 
+void MOTOR_Forward(void)
+{
+	GPIO_SetBits(MOTOR_DEPTH_LEFT_LEN_GPIO_PORT, MOTOR_DEPTH_LEFT_LEN_GPIO_PIN);	
+	GPIO_ResetBits(MOTOR_DEPTH_LEFT_REN_GPIO_PORT, MOTOR_DEPTH_LEFT_REN_GPIO_PIN);
+}
+
+void MOTOR_Backward(void)
+{
+
+}
 
