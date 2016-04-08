@@ -238,6 +238,18 @@ int MODBUS_WriteRegister(MODBUSTypeDef* const pmodbus, CircularBufferTypeDef* pr
 	}
 
 	/*写入数据*/
+	if(registerAddress == 0x02)
+	{
+		if(registerValue == 0x000F)
+			MOTOR_Forward();
+		else if(registerValue == 0x00F0)
+			MOTOR_Backward();
+	}
+	else if(registerAddress == 0x03)
+	{
+		MOTOR_SetMotorSpeed(registerValue);
+	}
+
 	modbusRegisters[registerAddress - 1] = registerValue;
 
 	/*构造回复PDU*/
