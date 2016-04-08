@@ -97,8 +97,8 @@ void MOTOR_Init(void)
     GPIO_Init(MOTOR_DIRECTION_RIGHT_CFB_GPIO_PORT, &GPIO_InitStructure);
 
 	/*定时器设置*/
-	/* Time Base configuration 84MHz/32KHz = 2625*/
-	TIM_TimeBaseStructure.TIM_Prescaler = 0;
+	/* Time Base configuration 84MHz/16KHz = 2625*/
+	TIM_TimeBaseStructure.TIM_Prescaler = 1;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned1;
 	TIM_TimeBaseStructure.TIM_Period = 2625;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
