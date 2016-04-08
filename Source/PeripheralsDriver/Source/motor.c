@@ -1,12 +1,12 @@
 #include "stm32f4xx_conf.h"
 #include "motor.h"
 
-/*TEST VALUE*/
+/*INIT VALUE*/
 
 uint32_t CCR1_Val = 2500; /*2625/5*/
 uint32_t CCR2_Val = 1050;
 uint32_t CCR3_Val = 1575;
-uint32_t CCR4_Val = 2100;
+uint32_t CCR4_Val = 1050;
 
 /*
  *INH1 PWM1 PA11 CH4
