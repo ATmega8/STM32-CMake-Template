@@ -77,4 +77,6 @@ void MOTOR_Init(void);
 void MOTOR_Start(void);
 void MOTOR_Stop(void);
 void MOTOR_Forward(void);
+void MOTOR_Backward(void);
+void MOTOR_SetMotorSpeed(uint32_t speed);
 

@@ -1,5 +1,6 @@
 #include "modbus_define.h"
 #include "CRC.h"
+#include "motor.h"
 
 #include <stdlib.h>
 

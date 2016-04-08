@@ -153,7 +153,8 @@ void MOTOR_Start(void)
 
 void MOTOR_Stop(void)
 {
-	TIM_Cmd(MOTOR_TIMER, ENABLE);
+	TIM_CtrlPWMOutputs(MOTOR_TIMER, DISABLE);
+	TIM_Cmd(MOTOR_TIMER, DISABLE);
 }
 
 void MOTOR_Forward(void)
@@ -164,6 +165,12 @@ void MOTOR_Forward(void)
 
 void MOTOR_Backward(void)
 {
+	GPIO_ResetBits(MOTOR_DEPTH_LEFT_LEN_GPIO_PORT, MOTOR_DEPTH_LEFT_LEN_GPIO_PIN);	
+	GPIO_SetBits(MOTOR_DEPTH_LEFT_REN_GPIO_PORT, MOTOR_DEPTH_LEFT_REN_GPIO_PIN);
+}
 
+void MOTOR_SetMotorSpeed(uint32_t speed)
+{
+	TIM_SetCompare4(MOTOR_TIMER, speed);
 }
 
