@@ -99,13 +99,54 @@ inline void MODBUS_RegisterUpdate(void)
 	modbusRegisters[0] = 0;
 	modbusRegisters[1] = ADDRESS;
 	modbusRegisters[2] = 0;
-	modbusRegisters[3] = 2;
-	modbusRegisters[4] = 0;
-	modbusRegisters[5] = 3;
-	modbusRegisters[6] = 0;
-	modbusRegisters[7] = 4;
-	modbusRegisters[8] = 0;
-	modbusRegisters[9] = 5;
+}
+
+inline uint32_t MODBUS_RegisterAddress(MODBUSTypeDef* const pmodbus)
+{
+	uint32_t* pdata;
+	uint32_t registerAddress;
+
+	pdata = MODBUS_DataPointer(pmodbus);
+
+	/*高位*/
+	registerAddress =  *(pdata + 0) << 8;
+
+	/*低位*/
+	registerAddress |= *(pdata + 1);
+
+	return registerAddress;
+}
+
+inline uint32_t MODBUS_ReadRegisterLength(MODBUSTypeDef* const pmodbus)
+{
+	uint32_t* pdata;
+	uint32_t registerLength;
+
+	pdata = MODBUS_DataPointer(pmodbus);
+
+	/*高位*/
+	registerLength  =  *(pdata + 2) << 8;
+
+	/*低位*/
+	registerLength |= *(pdata + 3);
+
+	return registerLength;
+}
+
+inline uint32_t MODBUS_WriteRegisterData(MODBUSTypeDef* const pmodbus)
+{
+	uint32_t* pdata;
+	uint32_t registerData;
+
+	pdata = MODBUS_DataPointer(pmodbus);
+
+	/*高位*/
+	registerData   =  *(pdata + 2) << 8;
+
+	/*低位*/
+	registerData  |= *(pdata + 3);
+
+	return registerData;
 }
 
 void MODBUS_SetModbusFrame(CircularBufferTypeDef* pcbuf, MODBUSTypeDef* const pmodbus, uint32_t length)

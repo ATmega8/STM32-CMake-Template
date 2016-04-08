@@ -52,6 +52,8 @@ typedef struct
 	uint32_t  dataLength;
 	uint32_t  CRCL;
 	uint32_t  CRCH;
+	uint32_t  (*readCallBack[3])(void);
+	void      (*writeCallBack[3])(uint32_t);
 	MODBUSStatusTypeDef status;
 } MODBUSTypeDef;
 
@@ -83,4 +85,8 @@ int MODBUS_ReadRegister(MODBUSTypeDef* const pmodbus, CircularBufferTypeDef* prx
 int MODBUS_WriteRegister(MODBUSTypeDef* const pmodbus, CircularBufferTypeDef* prxcbuf);
 
 extern void MODBUS_RegisterUpdate(void);
+
+extern uint32_t MODBUS_RegisterAddress(MODBUSTypeDef* const pmodbus);
+extern uint32_t MODBUS_ReadRegisterLength(MODBUSTypeDef* const pmodbus);
+extern uint32_t MODBUS_WriteRegisterData(MODBUSTypeDef* const pmodbus);
 
