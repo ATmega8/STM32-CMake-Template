@@ -90,3 +90,8 @@ extern uint32_t MODBUS_RegisterAddress(MODBUSTypeDef* const pmodbus);
 extern uint32_t MODBUS_ReadRegisterLength(MODBUSTypeDef* const pmodbus);
 extern uint32_t MODBUS_WriteRegisterData(MODBUSTypeDef* const pmodbus);
 
+void MODBUS_Reply(CircularBufferTypeDef* prxcbuf);
+void MODBUS_ProcessRequest(MODBUSTypeDef* pmodbus, CircularBufferTypeDef* prxcbuf);
+void MODBUS_ProcessWriteSingleRegister(MODBUSTypeDef* pmodbus, CircularBufferTypeDef* prxcbuf);
+void MODBUS_ProcessReadHoldRegister(MODBUSTypeDef* pmodbus, CircularBufferTypeDef* prxcbuf);
+
