@@ -24,7 +24,7 @@ uint32_t CircularBuffer_Unused(CircularBufferTypeDef* pcbuf)
 {
 	uint32_t n;
 
-	n =	((CircularBuffer_Length(pcbuf) - (CircularBuffer_HeadPosition(pcbuf) -
+	n =	((CircularBuffer_Length(pcbuf) - (CircularBuffer_HeadPosition(pcbuf) +
 				CircularBuffer_TailPosition(pcbuf)))%CircularBuffer_Length(pcbuf));
 	return n;
 }
@@ -105,7 +105,7 @@ int CircularBuffer_Write(CircularBufferTypeDef* pcbuf, void* data, int len)
 	if(CircularBuffer_Status(pcbuf) == CircularBuffer_Empty)
 	{
 		n = min(len, CircularBuffer_Length(pcbuf));
-		unused = 10;
+		unused = CircularBuffer_Length(pcbuf);
 	}
 	else
 	{
